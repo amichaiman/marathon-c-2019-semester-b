@@ -37,7 +37,6 @@ char* get_numbers_from_input() {
             if (temp = is_sorted(s)) {
                 *temp = *(temp-1) + 1;
             }
-            puts(s);
         }
     }
     return s;
@@ -46,7 +45,7 @@ char* get_numbers_from_input() {
 int main() {
     char *s = get_numbers_from_input();
     printf("%s is%s sorted\n", s, is_sorted(s) == NULL ? "" : "n't");
-
+    free(s);
     return 0;
 }
 
