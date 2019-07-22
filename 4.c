@@ -26,8 +26,6 @@ int get_max_in_col(int a[][M], int col) {
 }
 
 /* a */
-// max_rows {2, 0, 1}        //returns from function
-// max_cols {1, 2, 0, 1, 2}  //returns from output param
 int* max_rows_cols(int a[][M], int** p_max_cols) {
     int i;
     int* max_rows = (int*) malloc (N*sizeof(int));
@@ -46,6 +44,26 @@ int* max_rows_cols(int a[][M], int** p_max_cols) {
 }
 
 /* b */
+// max_rows {2, 0, 1}        //returns from function
+// max_cols {1, 2, 0, 1, 2}  //returns from output param
+// max_cols[max_rows[i]] == i
+//
+//
+//               |i
+//--------------------
+// max_cols[2] == 0
+// max_cols[0] == 1
+// max_cols[1] == 2
+int get_biggest_in_row_and_col(int* max_rows, int* max_cols) {
+    int i;
+
+    for (i=0; i<N; i++) {
+        if (max_cols[max_rows[i]] == i) {
+            return i;
+        }
+    }
+    return -1;
+}
 void print_array(int *a, int size) {
     int i;
 
@@ -59,11 +77,14 @@ int main() {
     int a[N][M] = {{2, 5, 6, 4, 3},
                    {8, 2, 3, 6, 4},
                    {5, 7, 4, 1, 5}};
-
+//    int a[N][M];
+//    init(a);
     int *max_cols, *max_rows;
     max_rows = max_rows_cols(a, &max_cols);
     print_array(max_rows, N);
     print_array(max_cols, M);
+    int index_max_row_and_col = get_biggest_in_row_and_col(max_rows, max_cols);
+    printf("%d\n", a[index_max_row_and_col][max_rows[index_max_row_and_col]]);
     free(max_cols);
     free(max_rows);
     return 0;
