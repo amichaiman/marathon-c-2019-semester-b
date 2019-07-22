@@ -16,28 +16,29 @@ char* is_sorted(char *s) {
 
 /* b */
 char* get_numbers_from_input() {
+    char* s = NULL;
+    char* temp;
     char c;
     int len = 0;
-    char *s;
 
-    puts("Enter string");
-    while ((c = getchar()) != EOF) {
+    while (scanf("%c", &c) == 1) {// while ((c = getchar()) != EOF)
         if (isdigit(c)) {
-            /* make room for new digit */
-            s = (char*) realloc(s, len+2);
-            if (!s) {
-                printf("ERROR: Couldn't allocate memory in function get_numbers_from_input\n");
+            temp = (char*) realloc (s, (len + 2)*sizeof(char));
+            if (temp) {
+                s = temp;
+            } else {
+                fprintf(stderr, "ERROR: couldn't allocate memory in get_numbers_from_input\n");
+                free(s);
                 exit(1);
             }
-            /* add digit to the end */
-            s[len++] = c;
+            s[len++] = c; //add new digit at end
+                          //increment len
             s[len] = '\0';
+            if (temp = is_sorted(s)) {
+                *temp = *(temp-1) + 1;
+            }
+            puts(s);
         }
-    }
-    /* run "is_sorted" and replace digit if necessary */
-    char *p;
-    if ((p = is_sorted(s)) != NULL) {
-        *p = *(p-1)+1;
     }
     return s;
 }
